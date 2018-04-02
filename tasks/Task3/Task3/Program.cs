@@ -79,11 +79,13 @@ namespace Task3
 
     class Member : IOrga
     {
-        public Member(string name, string association, string type)
+        public Member(string name, string association, string type, int date, string status)
         {
             this.Name = name;
             this.Profession = association;
             this.Type = type;
+            this.Date = date;
+            this.Status = status;
         }
 
         public string Name
@@ -104,6 +106,19 @@ namespace Task3
             get;
             set;
         }
+
+        public int Date
+        {
+            get;
+            set;
+        }
+
+        public string Status
+        {
+            get;
+            set;
+        }
+
     }
 
     class Program
@@ -119,10 +134,10 @@ namespace Task3
                 new Guest(name:"Elisabeth Stangl", profession:"Autorin", type: "Gast"),
                 new Guest(name:"Karin Maier", profession:"Journalistin", type: "Gast"),
                 new Guest(name:"Felix Baumgartner", profession:"Sportler", type: "Gast"),
-                new Member(name:"Lisa Schnee", association: "Sportfreunde", type: "Vereinsmitglied"),
-                new Member(name:"Adam Mensch", association: "Sportfreunde", type: "Vereinsmitglied"),
-                new Member(name:"Eva Apfel", association: "Sportfreunde", type: "Vereinsmitglied"),
-                new Member(name:"Alex Hauser", association: "Sportfreunde", type: "Vereinsmitglied"),
+                new Member(name:"Lisa Schnee", association: "Sportfreunde", type: "Vereinsmitglied", date: 20020912, status: "Active"),
+                new Member(name:"Adam Mensch", association: "Sportfreunde", type: "Vereinsmitglied", date: 20070712, status: "Active"),
+                new Member(name:"Eva Apfel", association: "Sportfreunde", type: "Vereinsmitglied", date: 20000910, status: "Suspended"),
+                new Member(name:"Alex Hauser", association: "Sportfreunde", type: "Vereinsmitglied", date: 20010802, status: "Active"),
             };
 
            foreach (var x in Guests)
