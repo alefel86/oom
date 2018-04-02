@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,7 @@ namespace Task4
             this.Type = type;
         }
 
+        
         public string Name
         {
             get;
@@ -54,6 +56,7 @@ namespace Task4
             this.Profession = profession;
             this.Type = type;
         }
+             
 
         public string Name
         {
@@ -142,9 +145,37 @@ namespace Task4
             foreach (var x in Guests)
             {
                 Console.WriteLine($"{ x.Name,-40} { x.Profession,-40} {x.Type}");
+            }
+
+            var Json = new IOrga[]
+            {
+                new Employee(name:"Max Mustermann", department:"Anwalt", salary: 34000, type: "Mitarbeiter"),
+                new Guest(name:"Karin Maier", profession:"Journalistin", type: "Gast"),
+                new Member(name:"Alex Hauser", association: "Sportfreunde", type: "Vereinsmitglied", date: 20010802, status: "Active"),
+            };
+
+            string s = JsonConvert.SerializeObject(Json, Formatting.Indented);
+            Console.WriteLine(s);
+
+            string xy = @"{
+                        'name': 'Hans Nimmersatt',
+                        'department': 'Complicance',
+                        'salary' : '50000',
+                        'type' : 'Mitarbeiter'
+                        }";
+
+            Employee Test = JsonConvert.DeserializeObject<Employee>(xy);
+
+            Console.WriteLine(Test.Name);
+            Console.WriteLine(Test.Profession);
+            Console.WriteLine(Test.Salary);
+            Console.WriteLine(Test.Type);
+
+            Console.WriteLine(xy);
+
 
             }
                         
         }
     }
-}
+
