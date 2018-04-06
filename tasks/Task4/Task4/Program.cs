@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace Task4
 {
@@ -173,9 +174,16 @@ namespace Task4
 
             Console.WriteLine(xy);
 
+            var settings = new JsonSerializerSettings() { Formatting = Formatting.Indented, TypeNameHandling = TypeNameHandling.Auto };
+            Console.WriteLine(JsonConvert.SerializeObject(Json, settings));
 
-            }
-                        
+            var text = JsonConvert.SerializeObject(Json, settings);
+            var desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            var filename = Path.Combine(desktop, "IOrga.json");
+            File.WriteAllText(filename, text);
+
+            var textFromFile = File.ReadAllText(filename);
+            
         }
     }
-
+}
