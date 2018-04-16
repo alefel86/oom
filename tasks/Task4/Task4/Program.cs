@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 
 namespace Task4
 {
@@ -24,7 +26,7 @@ namespace Task4
             this.Type = type;
         }
 
-        
+
         public string Name
         {
             get;
@@ -57,7 +59,7 @@ namespace Task4
             this.Profession = profession;
             this.Type = type;
         }
-             
+
 
         public string Name
         {
@@ -183,6 +185,33 @@ namespace Task4
             File.WriteAllText(filename, text);
 
             var textFromFile = File.ReadAllText(filename);
+
+            var example = new IOrga[]
+            {
+                new Employee(name:"Max Mustermann", department:"Anwalt", salary: 34000, type: "Mitarbeiter"),
+                new Employee(name:"Moritz Mustermann", department:"Controller", salary: 53000, type: "Mitarbeiter"),
+                new Employee(name:"Peter Zwegat", department:"Einkäufer", salary: 69000, type: "Mitarbeiter"),
+                new Guest(name:"Herbert Lidl", profession:"Vorstand", type: "Gast"),
+                new Guest(name:"Elisabeth Stangl", profession:"Autorin", type: "Gast"),
+                new Guest(name:"Karin Maier", profession:"Journalistin", type: "Gast"),
+                new Guest(name:"Felix Baumgartner", profession:"Sportler", type: "Gast"),
+                new Member(name:"Lisa Schnee", association: "Sportfreunde", type: "Vereinsmitglied", date: 20020912, status: "Active"),
+                new Member(name:"Adam Mensch", association: "Sportfreunde", type: "Vereinsmitglied", date: 20070712, status: "Active"),
+                new Member(name:"Eva Apfel", association: "Sportfreunde", type: "Vereinsmitglied", date: 20000910, status: "Suspended"),
+                new Member(name:"Alex Hauser", association: "Sportfreunde", type: "Vereinsmitglied", date: 20010802, status: "Active"),
+            };
+
+            var producer = new Subject<IOrga>();
+            producer.Subscribe(x => Console.WriteLine($"next Member: {x.Name}"));
+
+            var p = producer.GetEnumerator();
+
+            for (var i = 0; i < 10; i++)
+            {
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
+                producer.OnNext(new Member(name: "Alex Hauser", association: "Sportfreunde", type: "Vereinsmitglied", date: 20010802, status: "Active"));
+            }
+
             
         }
     }
